@@ -50,7 +50,7 @@ local Window = Rayfield:CreateWindow({
     humanoid.JumpPower = 0
     
     -- Defina a posição de destino
-    local destino = Vector3.new(-949.362060546875, 93.59180450439453, 2056.14111328125) -- Altere para a posição desejada
+    local destino = Vector3.new(33.25969696044922, 14.008037567138672, 24.66291046142578) -- Altere para a posição desejada
     
     -- Configuração do Tween
     local tweenInfo = TweenInfo.new(
@@ -71,3 +71,49 @@ local Window = Rayfield:CreateWindow({
 
     end,
  })
+
+ local Slider = Tab:CreateSlider({
+    Name = "Walkspeed ",
+    Range = {16, 100},
+    Increment = 10,
+    Suffix = "Walkspeed",
+    CurrentValue = 16,
+    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+    end,
+ })
+
+ local Slider = Tab:CreateSlider({
+    Name = "JumPower ",
+    Range = {50, 300},
+    Increment = 10,
+    Suffix = "JumpPower",
+    CurrentValue = 50,
+    Flag = "Slider2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
+    end,
+ })
+
+ local Button = Tab:CreateButton({
+    Name = "Infinite Jump",
+    Callback = function()
+         local InfiniteJumpEnabled = true
+ game:GetService("UserInputService").JumpRequest:connect(function()
+     if InfiniteJumpEnabled then
+         game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+     end
+ end)
+ local InfiniteJump = CreateButton("Infinite Jump: Off", StuffFrame)
+ InfiniteJump.Position = UDim2.new(0,10,0,130)
+ InfiniteJump.Size = UDim2.new(0,150,0,30)
+ InfiniteJump.MouseButton1Click:connect(function()
+     local state = InfiniteJump.Text:sub(string.len("Infinite Jump: ") + 1) --too lazy to count lol
+     local new = state == "Off" and "On" or state == "On" and "Off"
+     InfiniteJumpEnabled = new == "On"
+     InfiniteJump.Text = "Infinite Jump: " .. new
+ end)
+    end,
+ })
+ 
