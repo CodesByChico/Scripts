@@ -1,7 +1,7 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "Rayfield Example Window",
+    Name = "Prison Life Script 1",
     Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
     LoadingTitle = "Prison Life Scipt 1",
     LoadingSubtitle = "By anonymous",
@@ -117,3 +117,89 @@ local Window = Rayfield:CreateWindow({
     end,
  })
  
+ local Button = Tab:CreateButton({
+    Name = "Tween to Prison",
+    Callback = function()
+        local TweenService = game:GetService("TweenService")
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local humanoid = character:WaitForChild("Humanoid")
+        
+        -- Desativa o movimento do jogador
+        humanoid.WalkSpeed = 0
+        humanoid.JumpPower = 0
+        
+        -- Defina a posição de destino
+        local destino = Vector3.new(906.399658203125, 97.1383056640625, 2388.500732421875) -- Altere para a posição desejada
+        
+        -- Configuração do Tween
+        local tweenInfo = TweenInfo.new(
+            2, -- Tempo de duração
+            Enum.EasingStyle.Quad, -- Estilo de animação
+            Enum.EasingDirection.Out -- Direção da animação
+        )
+        
+        local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(destino)})
+        
+        tween:Play()
+        
+        tween.Completed:Connect(function()
+            -- Reativa o movimento do jogador após o tween
+            humanoid.WalkSpeed = 16
+            humanoid.JumpPower = 50
+        end)
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Fly",
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local rootPart = character:WaitForChild("HumanoidRootPart")
+local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+-- Impede o personagem de cair e ativa o modo de voo
+humanoid.PlatformStand = true  
+
+-- Cria um BodyVelocity para manter o personagem no ar
+local bodyVelocity = Instance.new("BodyVelocity")
+bodyVelocity.MaxForce = Vector3.new(4000, 4000, 4000) -- Aplica força em todas as direções
+bodyVelocity.Parent = rootPart
+
+local speed = 50 -- Velocidade do voo
+
+RunService.RenderStepped:Connect(function()
+    local moveDirection = Vector3.new(0, 0, 0)
+    local camera = workspace.CurrentCamera
+    local forward = camera.CFrame.LookVector
+    local right = camera.CFrame.RightVector
+
+    if UserInputService:IsKeyDown(Enum.KeyCode.W) then
+        moveDirection = moveDirection + Vector3.new(forward.X, forward.Y, forward.Z)
+    end
+    if UserInputService:IsKeyDown(Enum.KeyCode.S) then
+        moveDirection = moveDirection - Vector3.new(forward.X, forward.Y, forward.Z)
+    end
+    if UserInputService:IsKeyDown(Enum.KeyCode.A) then
+        moveDirection = moveDirection - Vector3.new(right.X, right.Y, right.Z)
+    end
+    if UserInputService:IsKeyDown(Enum.KeyCode.D) then
+        moveDirection = moveDirection + Vector3.new(right.X, right.Y, right.Z)
+    end
+
+    -- Se o jogador estiver se movendo, aplica velocidade
+    if moveDirection.Magnitude > 0 then
+        bodyVelocity.Velocity = moveDirection.Unit * speed
+    else
+        bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+    end
+end)
+
+    end,
+ })
