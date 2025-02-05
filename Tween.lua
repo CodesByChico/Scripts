@@ -50,7 +50,7 @@ local Window = Rayfield:CreateWindow({
     humanoid.JumpPower = 0
     
     -- Defina a posição de destino
-    local destino = Vector3.new(33.25969696044922, 14.008037567138672, 24.66291046142578) -- Altere para a posição desejada
+    local destino = Vector3.new(-949.362060546875, 93.59180450439453, 2056.14111328125) -- Altere para a posição desejada
     
     -- Configuração do Tween
     local tweenInfo = TweenInfo.new(
