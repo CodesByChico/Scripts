@@ -1,3 +1,4 @@
+# About Chico (me)
 🎮 Hi, I'm HpLowes (or Chico)! 🚀
 I'm a beginner developer creating scripts for Roblox 📝, passionate about learning and exploring the world of programming. 🧠💡
 
